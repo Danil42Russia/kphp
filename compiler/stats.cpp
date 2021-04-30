@@ -68,6 +68,7 @@ void Stats::write_to(std::ostream &out, bool with_indent) const {
   out << indent << "vars.global_const: " << global_const_vars_ << std::endl;
   out << indent << "vars.param: " << param_vars_ << std::endl;
   out << indent << "vars.param_make_clone: " << cnt_make_clone << std::endl;
+  out << indent << "optimized null checks: " << cnt_null_elim << std::endl;
   out << block_sep;
   out << indent << "types.instance: " << instance_vars_ << std::endl;
   out << indent << "types.local_mixed: " << cnt_mixed_vars << std::endl;

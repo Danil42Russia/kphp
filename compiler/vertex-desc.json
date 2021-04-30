@@ -357,6 +357,10 @@
       "var_id": {
         "type": "VarPtr",
         "default": "{}"
+      },
+      "is_null_safe": {
+        "type": "bool",
+        "default": "false"
       }
     }
   },

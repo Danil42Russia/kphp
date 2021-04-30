@@ -23,6 +23,7 @@ public:
   std::atomic<std::uint64_t> total_lambdas{0u};
   std::atomic<std::uint64_t> cnt_mixed_params{0u};
   std::atomic<std::uint64_t> cnt_mixed_vars{0u};
+  std::atomic<std::uint64_t> cnt_null_elim{0u};
   std::atomic<std::uint64_t> cnt_const_mixed_params{0u};
   std::atomic<std::uint64_t> cnt_make_clone{0u};
 

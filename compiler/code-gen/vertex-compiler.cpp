@@ -1279,7 +1279,11 @@ void compile_index_of_string(VertexAdaptor<op_index> root, CodeGenerator &W) {
 }
 
 void compile_instance_prop(VertexAdaptor<op_instance_prop> root, CodeGenerator &W) {
-  W << root->instance() << "->$" << root->get_string();
+  if (root->is_null_safe) {
+    W << root->instance() << ".get()->$" << root->get_string();
+  } else {
+    W << root->instance() << "->$" << root->get_string();
+  }
 }
 
 void compile_index(VertexAdaptor<op_index> root, CodeGenerator &W) {

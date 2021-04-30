@@ -136,6 +136,7 @@ prepend(KPHP_COMPILER_PIPES_SOURCES pipes/
         inline-simple-functions.cpp
         load-files.cpp
         optimization.cpp
+        null-check-elim.cpp
         parse.cpp
         parse-and-apply-phpdoc.cpp
         preprocess-break.cpp

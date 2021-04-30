@@ -72,6 +72,7 @@
 #include "compiler/pipes/inline-defines-usages.h"
 #include "compiler/pipes/load-files.h"
 #include "compiler/pipes/optimization.h"
+#include "compiler/pipes/null-check-elim.h"
 #include "compiler/pipes/parse.h"
 #include "compiler/pipes/parse-and-apply-phpdoc.h"
 #include "compiler/pipes/preprocess-break.h"
@@ -277,6 +278,7 @@ bool compiler_execute(CompilerSettings *settings) {
     >> PassC<CheckClassesPass>{}
     >> PassC<CheckConversionsPass>{}
     >> PassC<OptimizationPass>{}
+    >> PassC<NullCheckElimPass>{}
     >> PassC<FixReturnsPass>{}
     >> PassC<CalcValRefPass>{}
     >> PassC<CalcFuncDepPass>{}
