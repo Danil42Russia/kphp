@@ -18,4 +18,4 @@ jobs:
           python-version: "3.10"
 
       - name: 'Check license'
-        run: python3 ${{PWD}}/scripts/license.py -w ${{PWD}}
+        run: python3 $PWD/scripts/license.py -w $PWD
