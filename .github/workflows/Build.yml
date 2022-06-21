@@ -45,7 +45,7 @@ jobs:
       uses: actions/cache@v3
       id: docker-image-cache
       with:
-        path: $GITHUB_WORKSPACE/docker_build/kphp-build-env-${{matrix.os}}.tar
+        path: $GITHUB_WORKSPACE/kphp-build-env-${{matrix.os}}.tar
         key: docker-image-cache-${{matrix.os}}-${{ hashFiles('.github/workflows/Dockerfile.*') }}
 
     - name: Build docker image
@@ -54,11 +54,11 @@ jobs:
 
     - name: Save docker image
       if: steps.docker-image-cache.outputs.cache-hit != 'true'
-      run: docker save --output $GITHUB_WORKSPACE/docker_build/kphp-build-env-${{matrix.os}}.tar kphp-build-img-${{matrix.os}}
+      run: docker save --output $GITHUB_WORKSPACE/kphp-build-env-${{matrix.os}}.tar kphp-build-img-${{matrix.os}}
 
     - name: Load docker image from cache
       if: steps.docker-image-cache.outputs.cache-hit == 'true'
-      run: docker load --input $GITHUB_WORKSPACE/docker_build/kphp-build-env-${{matrix.os}}.tar
+      run: docker load --input $GITHUB_WORKSPACE/kphp-build-env-${{matrix.os}}.tar
 
 #    - name: Start docker container
 #      run: docker run -dt --name kphp-build-container-${{matrix.os}} --volume $GITHUB_WORKSPACE:${{env.kphp_root_dir}} kphp-build-img-${{matrix.os}}
