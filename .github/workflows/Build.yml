@@ -3,7 +3,7 @@ name: build
 on:
   pull_request:
     branches:
-    - master
+      - master
 
 env:
   kphp_root_dir: /home/kitten/kphp
@@ -24,26 +24,21 @@ jobs:
     name: "${{matrix.os}}/${{matrix.compiler}}/c++${{matrix.cpp}}/asan=${{matrix.asan}}/ubsan=${{matrix.ubsan}}"
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Cache docker image
-      uses: actions/cache@v3
-      id: docker-image-cache
-      with:
-        path: $GITHUB_WORKSPACE/kphp-build-env-${{matrix.os}}.tar
-        key: docker-image-cache-${{matrix.os}}-${{ hashFiles('.github/workflows/Dockerfile.*') }}
+      - name: Cache docker image
+        uses: actions/cache@v3
+        id: docker-image-cache
+        with:
+          path: kphp-build-env-${{matrix.os}}.tar
+          key: docker-image-cache-${{matrix.os}}-${{ hashFiles('.github/workflows/Dockerfile.*') }}
 
-    - name: Build docker image
-      if: steps.docker-image-cache.outputs.cache-hit != 'true'
-      run: docker build -f $GITHUB_WORKSPACE/.github/workflows/Dockerfile.${{matrix.os}} $GITHUB_WORKSPACE -t kphp-build-img-${{matrix.os}}
+      - name: Build and save docker image
+        if: steps.docker-image-cache.outputs.cache-hit != 'true'
+        run: |
+          docker build -f $GITHUB_WORKSPACE/.github/workflows/Dockerfile.${{matrix.os}} $GITHUB_WORKSPACE -t kphp-build-img-${{matrix.os}}
+          docker save --output kphp-build-env-${{matrix.os}}.tar kphp-build-img-${{matrix.os}}
 
-    - name: Save docker image
-      if: steps.docker-image-cache.outputs.cache-hit != 'true'
-      run: docker save --output $GITHUB_WORKSPACE/kphp-build-env-${{matrix.os}}.tar kphp-build-img-${{matrix.os}}
-
-    - name: Load docker image from cache
-      if: steps.docker-image-cache.outputs.cache-hit == 'true'
-      run: docker load --input $GITHUB_WORKSPACE/kphp-build-env-${{matrix.os}}.tar
-
-    - name: Test
-      run: ls -la $GITHUB_WORKSPACE && docker images
+      - name: Load docker image from cache
+        if: steps.docker-image-cache.outputs.cache-hit == 'true'
+        run: docker load --input kphp-build-env-${{matrix.os}}.tar
