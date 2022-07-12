@@ -126,7 +126,6 @@ static ClassPtr extract_for_encoder_from_kphp_json_tag(FunctionPtr resolve_conte
   std::string for_encoder_name = resolve_uses(resolve_context, static_cast<std::string>(str.substr(0, pos_sp)));
   ClassPtr for_encoder = G->get_class(for_encoder_name);
   kphp_error(for_encoder, fmt_format("Class {} not found after @kphp-json for", for_encoder_name));
-
   // super dock
   str = vk::trim(str.substr(pos_sp));
   return for_encoder;
