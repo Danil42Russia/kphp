@@ -37,7 +37,7 @@ jobs:
           brew update
           brew install python@3.13 re2c coreutils libiconv googletest shivammathur/php/php@7.4
           brew link --overwrite --force shivammathur/php/php@7.4
-          /opt/homebrew/opt/python@3.13/libexec/bin/python -m pip install --upgrade pip --user --break-system-packages && /opt/homebrew/opt/python@3.13/libexec/bin/pip install --break-system-packages jsonschema six
+          /opt/homebrew/opt/python@3.13/libexec/bin/python -m pip install --upgrade pip --user --break-system-packages && /opt/homebrew/opt/python@3.13/libexec/bin/pip install --break-system-packages jsonschema six pytest
 
       - name: Run cmake
         run: cmake -DCMAKE_CXX_COMPILER=${{matrix.compiler}} -DCMAKE_CXX_STANDARD=${{matrix.cpp}} -DDOWNLOAD_MISSING_LIBRARIES=On -S $GITHUB_WORKSPACE -B ${{runner.workspace}}/build
@@ -54,3 +54,12 @@ jobs:
           echo 'hello world' > demo.php 
           $GITHUB_WORKSPACE/objs/bin/kphp2cpp --cxx ${{matrix.compiler}} demo.php
           kphp_out/server -o
+
+      - name: Run python tests
+        id: python_tests
+        continue-on-error: true
+        env:
+          GITHUB_ACTIONS: 1
+#          KPHP_TESTS_POLYFILLS_REPO: ${{env.kphp_polyfills_dir}}
+          KPHP_CXX: ${{matrix.compiler}}
+        run: python@3.13 -m pytest --tb=native -n$(nproc) ${{env.kphp_root_dir}}/tests/python/tests'
