@@ -16,12 +16,12 @@ jobs:
     strategy:
       matrix:
         include:
-#          - os: macos
-#            compiler: clang++
-#            cpp: 17
           - os: macos
             compiler: clang++
-            cpp: 23
+            cpp: 17
+          - os: macos
+            compiler: clang++
+            cpp: 20
 
     name: "${{matrix.os}} / ${{matrix.compiler}} / c++${{matrix.cpp}}"
 
